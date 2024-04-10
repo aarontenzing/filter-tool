@@ -23,6 +23,7 @@ class ImageClassifier:
         return int(parts[0]), int(parts[1].split('.')[0])
 
     def display_image(self):
+        print(self.images[self.current_index], self.conditions[self.current_index])
         image_path = os.path.join(self.directory, self.images[self.current_index])
         self.image1 = cv2.imread(image_path)
         image_path = os.path.join("conditions\\", self.conditions[self.current_index])

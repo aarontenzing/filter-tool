@@ -36,6 +36,7 @@ def read_json(filepath):
         return {}   
 
 def get_image_data(data, image_name, shots=5):
+    image_name = image_name.split(".")[0]
     image_name = image_name.split("_")
     index = ((int(image_name[0]) - 1) * shots) + (int(image_name[1]) - 1)
     return data[index]
@@ -47,18 +48,16 @@ if __name__ == "__main__":
     
     # Read all the annotations
     data = read_json("annotations.json")
-    image_anno = get_image_data(data, "2_4")
-    # print(value["image"], value["shot"])
     
     # Read the good images
     # and write their annotations to a file
-    directory = "dataset\\train\\good"
+    directory = "results\\good"
     files = os.listdir(directory)
-    print(files)
-    # write_json(image_anno)
+    sorted_files = sorted(files, key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1].split('.')[0])))
     
-    image_anno = get_image_data(data, "1_1")
-    # write_json(image_anno)
-    
+    for file in sorted_files:
+        print("writing file: ", file)
+        image_anno = get_image_data(data, file)
+        write_json(image_anno)
     
     
