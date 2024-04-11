@@ -4,23 +4,16 @@ import os
 class ImageClassifier:
     def __init__(self):
         self.directory = "data" # Directory containing images
+        
         self.images = os.listdir(self.directory) # List of image file names (1_1.jpg, 1_2.jpg, ...)
-        self.images.sort(key=self.images_sort)
+        self.images = sorted(self.images, key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1].split('.')[0])))
         
         self.conditions = os.listdir("conditions") # List of condition file names (img1_1.jpg, img1_2.jpg, ...)
-        self.conditions.sort(key=self.conditions_sort)
+        self.conditions = sorted(self.conditions, key=lambda x: (int(x.split('_')[0][3:]), int(x.split('_')[1].split('.')[0])))
         
         self.total_images = len(self.images)
         self.current_index = 0
         self.window_name = 'Image Classifier'
-
-    def conditions_sort(self, filename):
-        parts = filename.split('_')
-        return int(parts[0][3:]), int(parts[1].split('.')[0])
-    
-    def images_sort(self, filename):
-        parts = filename.split('_')
-        return int(parts[0]), int(parts[1].split('.')[0])
 
     def display_image(self):
         print(self.images[self.current_index], self.conditions[self.current_index])
@@ -35,10 +28,12 @@ class ImageClassifier:
         # Save the image in the respective folder
         if status == 'good':
             print(f"Image {self.images[self.current_index]} classified as good")
-            cv2.imwrite("dataset\\train\\good\\" + self.images[self.current_index], self.image1)
+            cv2.imwrite("dataset\\test\\good\\" + self.images[self.current_index], self.image1)
         elif status == 'bad':   
             print(f"Image {self.images[self.current_index]} classified as bad")
-            cv2.imwrite("dataset\\train\\bad\\" + self.images[self.current_index], self.image1)    
+            cv2.imwrite("dataset\\test\\bad\\" + self.images[self.current_index], self.image1)    
+
+        print("classified images: ", self.current_index + 1, "out of", self.total_images)
 
     def start_classification(self):
         cv2.namedWindow(self.window_name)
