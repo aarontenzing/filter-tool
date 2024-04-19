@@ -57,7 +57,7 @@ if __name__ == "__main__":
     
     for file in sorted_files:
         print("writing file: ", file)
-        image_anno = get_image_data(data, file)
+        image_anno = get_image_data(data, file, shots=5) # dont forget to change shots
         write_json(image_anno)
     
     

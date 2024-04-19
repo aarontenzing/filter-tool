@@ -9,7 +9,7 @@ class ImageClassifier:
         self.images = os.listdir(self.directory) # List of image file names (1_1.jpg, 1_2.jpg, ...)
         self.images = sorted(self.images, key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1].split('.')[0])))
         
-        self.conditions = os.listdir("conditions") 
+        self.conditions = os.listdir("wireframes") 
         self.conditions = sorted(self.conditions, key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1].split('.')[0])))
         
         self.total_images = len(self.images)
@@ -22,7 +22,7 @@ class ImageClassifier:
         print(self.images[self.current_index], self.conditions[self.current_index])
         image_path = os.path.join(self.directory, self.images[self.current_index])
         self.image1 = cv2.imread(image_path)
-        image_path = os.path.join("conditions\\", self.conditions[self.current_index])
+        image_path = os.path.join("wireframes\\", self.conditions[self.current_index])
         image2 = cv2.imread(image_path)        
         image = cv2.hconcat([self.image1, image2])
         cv2.imshow(self.window_name, image)
