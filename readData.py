@@ -35,12 +35,6 @@ def read_json(filepath):
         print(f"Error: Unable to decode JSON data from file '{filepath}'.")
         return {}   
 
-def get_image_data(data, image_name, shots=5):
-    image_name = image_name.split(".")[0]
-    image_name = image_name.split("_")
-    index = ((int(image_name[0]) - 1) * shots) + (int(image_name[1]) - 1)
-    return data[index]
-
 if __name__ == "__main__":
     
     # Clear good_annotations.json
@@ -53,11 +47,13 @@ if __name__ == "__main__":
     # and write their annotations to a file
     directory = "results\\good"
     files = os.listdir(directory)
-    sorted_files = sorted(files, key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1].split('.')[0])))
+    # sorted_files = sorted(files, key=lambda x: (int(x.split('_')[0]), int(x.split('_')[1].split('.')[0])))
+    sorted_files = sorted(files, key=lambda x: (int(x.split('.')[0])))
     
     for file in sorted_files:
         print("writing file: ", file)
-        image_anno = get_image_data(data, file, shots=5) # dont forget to change shots
+        idx = int(file.split('.')[0])
+        image_anno = data[idx]
         write_json(image_anno)
     
     
