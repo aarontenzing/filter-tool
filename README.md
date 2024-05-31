@@ -1,4 +1,4 @@
-Neural Network for Filtering
+# Neural Network for Filtering
 
 This documentation provides a overview of the process for using the trained ResNet18 model to classify synthetic images into 'good' or 'bad' categories. 
 It explains how to use the model.ipynb notebook to perform inference on a designated folder of images and save the filtered results into another folder.
